@@ -8,7 +8,7 @@ def number_of_subscribers(subreddit):
     """Queries the Reddit API and returns the number of subscribers
     to the subreddit"""
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {"User-Agent": "My-User-Agent"}
+    headers = {"User-Agent": "MyBot/1.0"}
     response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
@@ -16,6 +16,8 @@ def number_of_subscribers(subreddit):
         subscribers = data.get("subscribers")
         return subscribers
     else:
+        print("Error: Status code", response.status_code)
+        print("Response:", response.content)
         return 0
 
 if __name__ == "__main__":
