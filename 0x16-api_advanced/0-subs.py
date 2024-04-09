@@ -2,28 +2,29 @@
 """Module for task 0"""
 
 
+import requests
+
 def number_of_subscribers(subreddit):
     """Queries the Reddit API and returns the number of subscribers
     to the subreddit"""
-    import requests
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    headers = {"User-Agent": "My-User-Agent"}
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    sub_info = requests.get("https://www.reddit.com/r/{subreddit}/about.json"
-                            .format(subreddit),
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info.status_code >= 300:
+    if response.status_code == 200:
+        data = response.json().get("data")
+        subscribers = data.get("subscribers")
+        return subscribers
+    else:
         return 0
-
-    return sub_info.json().get("data").get("subscribers")
-
 
 if __name__ == "__main__":
     import sys
 
-    subreddit = sys.argv[1] if len(sys.argv) > 1 else None
-    if not subreddit:
-        print("Usage: python3 0-main.py <subreddit>")
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
         sys.exit(1)
 
+    subreddit = sys.argv[1]
     subscribers = number_of_subscribers(subreddit)
-    print("{}: {}".format(subreddit, subscribers))
+    print(subscribers)
