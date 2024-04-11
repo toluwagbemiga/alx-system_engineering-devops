@@ -2,9 +2,10 @@
 
 """ 
 Script to query a list of all hot posts on a given Reddit subreddit. 
-""" 
+"""
 
 import requests
+
 
 def recurse(subreddit, hot_list=[], after=None, count=0, max_posts=None):
     """
@@ -16,15 +17,18 @@ def recurse(subreddit, hot_list=[], after=None, count=0, max_posts=None):
                                     Default is an empty list.
         after (str, optional): Token used for pagination.
                                 Default is None.
-        count (int, optional): Current count of retrieved posts. Default is 0.
-        max_posts (int, optional): Maximum number of posts to retrieve. Default is None.
+        count (int, optional): Current count of retrieved posts. 
+        Default is 0.
+        max_posts (int, optional): Maximum number of posts 
+        to retrieve. Default is None.
     Returns:
         list: A list of post titles from the hot section of the subreddit.
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
     headers = {"User-Agent": "My-Reddit-Scraper/1.0"}
     params = {"after": after, "count": count, "limit": 100}
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+    response = requests.get(url, headers=headers,
+                            params=params, allow_redirects=False)
 
     if response.status_code != 200:
         return None
