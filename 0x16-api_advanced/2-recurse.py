@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+""" 
+Script to query a list of all hot posts on a given Reddit subreddit. 
+""" 
+
 import requests
 
 def recurse(subreddit, hot_list=[], after=None, count=0, max_posts=None):
