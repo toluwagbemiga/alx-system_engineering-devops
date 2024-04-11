@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import requests
 
 def recurse(subreddit, hot_list=[], after=None, count=0, max_posts=None):
